@@ -28,10 +28,10 @@ public class UserAttributes {
     public void setTumor_size(String tumor_size) {
         this.tumor_size = tumor_size;
     }
-    public String getInv_nodes() {
+    public int getInv_nodes() {
         return inv_nodes;
     }
-    public void setInv_nodes(String inv_nodes) {
+    public void setInv_nodes(int inv_nodes) {
         this.inv_nodes = inv_nodes;
     }
     public String getNode_caps() {
@@ -52,11 +52,11 @@ public class UserAttributes {
     public void setBreast(String breast) {
         this.breast = breast;
     }
-    public String getBreat_quad() {
-        return breat_quad;
+    public String getBreast_quad() {
+        return breast_quad;
     }
-    public void setBreat_quad(String breat_quad) {
-        this.breat_quad = breat_quad;
+    public void setBreast_quad(String breat_quad) {
+        this.breast_quad = breat_quad;
     }
     public String getIrradiat() {
         return irradiat;
@@ -71,11 +71,11 @@ public class UserAttributes {
         this.classResult = classResult;
     }
     private String tumor_size;
-    private String inv_nodes;
+    private int inv_nodes;
     private String node_caps;
     private String deg_malig;
     private String breast;
-    private String breat_quad;
+    private String breast_quad;
     private String irradiat;
     private String classResult;
 }
