@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/userAttributes")
 public class UserAttributesController {
     @Autowired
@@ -16,7 +17,6 @@ public class UserAttributesController {
 
     @PostMapping()
     public Response predict(@RequestBody UserAttributes userAttributes) throws Exception {
-        System.out.println(userAttributes+"tetste");
         return service.predict(userAttributes);
     }
 }

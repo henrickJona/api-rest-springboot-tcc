@@ -10,7 +10,10 @@ import java.util.Random;
 
 import org.springframework.asm.Label;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.ClassPathResource;
+import java.io.InputStream;
 import org.springframework.stereotype.Service;
 import weka.core.*;
 import weka.classifiers.Evaluation;
@@ -26,24 +29,46 @@ public class UserAttributesService {
     private ResourceLoader resourceLoader;
 
     public Response predict(UserAttributes userAttributes) throws Exception {
-    DataSource source = new DataSource("C:/Users/Jonathan/Downloads/tcc/tcc/target/classes/dataset_smotted.arff");
-   
- 
+//         ClassPathResource resource = new ClassPathResource("dataset_smotted.arff");
+//         String inputStream = resource.getURI().toString();
+// ClassPathResource resources = new ClassPathResource("tcc_model.model");
+// String inputStreams = resources.getURI().toString();
+        //Resource resource=resourceLoader.getResource("classpath:/dataset_smotted.arff");
+        //Resource resourceModel=resourceLoader.getResource("classpath:/tcc_model.model");
+        //System.out.println(inputStream+"k"+resource.contentLength());
+        DataSource source = new DataSource("target/classes/dataset_smotted.arff");
+    //DataSource source = new DataSource(resource.getURI());
+   System.out.println(userAttributes);System.out.println("test1");
         Instance inst = new DenseInstance(10);
+        System.out.println("test2");
+        
         inst.setDataset(source.getDataSet(9));
+        System.out.println(userAttributes.getInv_nodes()+"Ooooo"+userAttributes.getIrradiat()+userAttributes.getBreast()+"test3"+inst+userAttributes.getAge()+userAttributes.getMenopause()+userAttributes.getTumor_size()+userAttributes.getInv_nodes()+userAttributes.getClassResult()+userAttributes.getBreast_quad());
         inst.setValue(0, userAttributes.getAge());
+        System.out.println(1);
         inst.setValue(1, userAttributes.getMenopause());
+        System.out.println(2);
         inst.setValue(2, userAttributes.getTumor_size());
+        System.out.println(3);
         inst.setValue(3, userAttributes.getInv_nodes());
+        System.out.println(4);
         inst.setValue(4, userAttributes.getNode_caps());
+        System.out.println(5);
         inst.setValue(5, userAttributes.getDeg_malig());
+        System.out.println(6);
         inst.setValue(6, userAttributes.getBreast());
-        inst.setValue(7, userAttributes.getBreat_quad());
+        System.out.println(7);
+        inst.setValue(7, userAttributes.getBreast_quad());
+        System.out.println(8);
         inst.setValue(8, userAttributes.getIrradiat());
+        System.out.println(9);
         inst.setValue(9, userAttributes.getClassResult());
-       
-
-        RandomForest  rf =(RandomForest) SerializationHelper.read("C:/Users/Jonathan/Downloads/tcc/tcc/target/classes/tcc_model.model");
+        System.out.println(4);
+        System.out.println("test2");
+        //RandomForest  rf =(RandomForest) SerializationHelper.read("C:/Users/Jonathan/Downloads/tcc/tcc/target/classes/tcc_model.model");
+//System.out.println(inst+"lp");
+System.out.println("ju");
+        RandomForest  rf =(RandomForest) SerializationHelper.read("target/classes/tcc_model.model");
         rf.buildClassifier(source.getDataSet(9));
        Enumeration classes = source.getDataSet(9).classAttribute().enumerateValues();
        while (classes.hasMoreElements()){
