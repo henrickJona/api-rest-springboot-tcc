@@ -3,8 +3,8 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 FROM openjdk:17-jdk-slim
-ADD ./src/main/resources/static
-ADD ./target/classes
+ADD ./src/main/resources/static /src/main/resources/static 
+ADD ./target/classes /target/classes
 COPY --from=build /target/spring-boot-docker.jar spring-boot-docker.jar
 #ADD target/spring-boot-docker.jar spring-boot-docker.jar
 EXPOSE 8080
