@@ -14,6 +14,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.ClassPathResource;
 import java.io.InputStream;
+import java.net.URL;
 import org.springframework.stereotype.Service;
 import weka.core.*;
 import weka.classifiers.Evaluation;
@@ -29,14 +30,16 @@ public class UserAttributesService {
     private ResourceLoader resourceLoader;
 
     public Response predict(UserAttributes userAttributes) throws Exception {
-//         ClassPathResource resource = new ClassPathResource("dataset_smotted.arff");
-//         String inputStream = resource.getURI().toString();
-// ClassPathResource resources = new ClassPathResource("tcc_model.model");
-// String inputStreams = resources.getURI().toString();
+        ClassPathResource resource = new ClassPathResource("dataset_smotted.arff");
+        String inputStream = resource.getPath().toString();
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL resourcex = classLoader.getResource("tcc_model.model");
+System.out.println(this.getFileFromResourceAsStream("tcc_model.model")+" "+inputStream);
         //Resource resource=resourceLoader.getResource("classpath:/dataset_smotted.arff");
         //Resource resourceModel=resourceLoader.getResource("classpath:/tcc_model.model");
         //System.out.println(inputStream+"k"+resource.contentLength());
-        DataSource source = new DataSource("target/classes/dataset_smotted.arff");
+        //tafuncionadDataSource source = new DataSource("./dataset_smotted.arff");
+        DataSource source = new DataSource(inputStream);
     //DataSource source = new DataSource(resource.getURI());
    System.out.println(userAttributes);System.out.println("test1");
         Instance inst = new DenseInstance(10);
@@ -68,7 +71,8 @@ public class UserAttributesService {
         //RandomForest  rf =(RandomForest) SerializationHelper.read("C:/Users/Jonathan/Downloads/tcc/tcc/target/classes/tcc_model.model");
 //System.out.println(inst+"lp");
 System.out.println("ju");
-        RandomForest  rf =(RandomForest) SerializationHelper.read("target/classes/tcc_model.model");
+        RandomForest  rf =(RandomForest) SerializationHelper.read(this.getFileFromResourceAsStream("tcc_model.model"));
+        System.out.println(rf+"ALon");
         rf.buildClassifier(source.getDataSet(9));
        Enumeration classes = source.getDataSet(9).classAttribute().enumerateValues();
        while (classes.hasMoreElements()){
@@ -91,6 +95,19 @@ System.out.println("ju");
         System.out.println("Probabilidade de ter recorrência: "+rf.distributionForInstance(inst)[1]);
         return response;
     }
+    private InputStream getFileFromResourceAsStream(String fileName) {
 
+        // The class loader that loaded the class
+        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream(fileName);
+
+        // the stream holding the file content
+        if (inputStream == null) {
+            throw new IllegalArgumentException("file not found! " + fileName);
+        } else {
+            return inputStream;
+        }
+
+    }
    
 }
