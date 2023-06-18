@@ -4,7 +4,7 @@ RUN mvn clean package -DskipTests
 
 FROM openjdk:17-jdk-slim
 
-COPY --from=build /target/spring-boot-docker spring-boot-docker
-#ADD target/spring-boot-docker spring-boot-docker
+COPY --from=build /target/spring-boot-docker.jar spring-boot-docker.jar
+#ADD target/spring-boot-docker.jar spring-boot-docker.jar
 EXPOSE 8080
-ENTRYPOINT ["java","-jar", "/spring-boot-docker"]
+ENTRYPOINT ["java","-jar", "/spring-boot-docker.jar"]
