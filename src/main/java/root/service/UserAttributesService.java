@@ -50,7 +50,7 @@ public class UserAttributesService {
         inst.setValue(8, userAttributes.getIrradiat());
 
         // Carregar modelo treinado
-        RandomForest rf = (RandomForest) SerializationHelper.read("target/classes/tcc_model.model");
+        RandomForest rf = (RandomForest) SerializationHelper.read(this.getFileFromResourceAsStream("tcc_model.model"));
 
         // Fazer a predição
         double[] probabilities = rf.distributionForInstance(inst);
@@ -59,5 +59,20 @@ public class UserAttributesService {
 
         Response response = new Response(pNR, pR, 0, 0); // Remove métricas desnecessárias
         return response;
+    }
+
+    private InputStream getFileFromResourceAsStream(String fileName) {
+
+        // The class loader that loaded the class
+        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream(fileName);
+
+        // the stream holding the file content
+        if (inputStream == null) {
+            throw new IllegalArgumentException("file not found! " + fileName);
+        } else {
+            return inputStream;
+        }
+
     }
 }
