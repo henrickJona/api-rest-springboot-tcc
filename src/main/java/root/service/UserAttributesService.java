@@ -57,7 +57,7 @@ public class UserAttributesService {
         double pNR = probabilities[0]; // Probabilidade de não ter recorrência
         double pR = probabilities[1]; // Probabilidade de ter recorrência
 
-        Response response = new Response(pNR, pR, 0, 0); // Remove métricas desnecessárias
+        Response response = new Response(pNR, pR); // Remove métricas desnecessárias
         return response;
     }
 
